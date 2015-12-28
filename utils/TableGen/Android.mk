@@ -25,9 +25,11 @@ LOCAL_STATIC_LIBRARIES := \
   libLLVMSupport
 
 LOCAL_LDLIBS += -lm
-LOCAL_LDLIBS_windows := -limagehlp -lpsapi
-LOCAL_LDLIBS_darwin := -lpthread -ldl
-LOCAL_LDLIBS_linux := -lpthread -ldl
+ifeq ($(HOST_OS),windows)
+  LOCAL_LDLIBS += -limagehlp -lpsapi
+else
+  LOCAL_LDLIBS += -lpthread -ldl
+endif
 
 include $(LLVM_HOST_BUILD_MK)
 include $(BUILD_HOST_EXECUTABLE)
